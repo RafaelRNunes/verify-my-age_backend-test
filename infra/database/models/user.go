@@ -14,14 +14,12 @@ type User struct {
 	Address  Address
 }
 
-func MapUserToModel(user entity.User) User {
-	return User{
-		Name:     user.Name,
-		Age:      user.Age,
-		Email:    user.Email,
-		Password: user.Password,
-		Address:  MapAddressToModel(user.Address),
-	}
+func (this *User) MapUserToModel(user entity.User) {
+	this.Name = user.Name
+	this.Age = user.Age
+	this.Email = user.Email
+	this.Password = user.Password
+	this.Address.MapAddressToModel(user.Address)
 }
 
 func (this *User) MapUserToEntity() *entity.User {

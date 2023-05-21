@@ -15,14 +15,12 @@ type Address struct {
 	UserId   uint
 }
 
-func MapAddressToModel(address entity.Address) Address {
-	return Address{
-		Address:  address.Address,
-		City:     address.City,
-		County:   address.County,
-		Country:  address.Country,
-		Postcode: address.Postcode,
-	}
+func (this *Address) MapAddressToModel(address entity.Address) {
+	this.Address = address.Address
+	this.City = address.City
+	this.County = address.County
+	this.Country = address.Country
+	this.Postcode = address.Postcode
 }
 
 func (this *Address) MapAddressToEntity() *entity.Address {

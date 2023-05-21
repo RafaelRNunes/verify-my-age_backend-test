@@ -53,6 +53,12 @@ func UpdateUser(ctx *gin.Context) {
 	}
 
 	userUpdated := userService.Update(userId, user)
+
+	if userUpdated.Id == 0 {
+		ctx.JSON(http.StatusNotFound, "User not found to update")
+		return
+	}
+
 	ctx.JSON(http.StatusOK, userUpdated)
 }
 

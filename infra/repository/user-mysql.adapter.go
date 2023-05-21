@@ -14,7 +14,8 @@ func NewUserMySqlRepository() *UserMySqlRepository {
 }
 
 func (this *UserMySqlRepository) Create(user entity.User) entity.User {
-	userModel := models.MapUserToModel(user)
+	userModel := models.User{}
+	userModel.MapUserToModel(user)
 	database.DB.Create(&userModel)
 	return *userModel.MapUserToEntity()
 }
@@ -32,13 +33,34 @@ func (this *UserMySqlRepository) FindAll() []entity.User {
 }
 
 func (this *UserMySqlRepository) FindById(userId int) entity.User {
-	return entity.User{}
+	var user models.User
+	database.DB.Preload("Address").First(&user, userId)
+	return *user.MapUserToEntity()
 }
 
 func (this *UserMySqlRepository) Update(userId int, user entity.User) entity.User {
-	return entity.User{}
+	var userModel models.User
+	database.DB.First(&userModel, userId)
+
+	if userModel.ID == 0 {
+		return entity.User{}
+	}
+
+	userModel.MapUserToModel(user)
+	database.DB.Model(&userModel).Updates(userModel)
+	database.DB.First(&userModel, userId)
+
+	return *userModel.MapUserToEntity()
 }
 
 func (this *UserMySqlRepository) Delete(userId int) bool {
+	var userModel models.User
+	database.DB.First(&userModel, userId)
+
+	if userModel.ID == 0 {
+		return false
+	}
+
+	database.DB.Delete(&userModel, userId)
 	return true
 }
