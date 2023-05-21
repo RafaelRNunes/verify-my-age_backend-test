@@ -1,12 +1,7 @@
 package entity
 
-import (
-	"github.com/google/uuid"
-)
-
-// User struct
 type User struct {
-	Id       uuid.UUID
+	Id       int
 	Name     string
 	Age      int
 	Email    string
