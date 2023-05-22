@@ -3,6 +3,7 @@ package controllers
 import (
 	"github.com/RafaelRNunes/verify-my-age_backend-test/application/dto"
 	"github.com/RafaelRNunes/verify-my-age_backend-test/config"
+	"github.com/RafaelRNunes/verify-my-age_backend-test/infra/api-gin-adapter/presenter"
 	"github.com/gin-gonic/gin"
 	_ "github.com/swaggo/swag/example/celler/httputil"
 	"net/http"
@@ -22,7 +23,7 @@ var userService = config.NewUserService()
 // @Router /users [get]
 func FindUsers(ctx *gin.Context) {
 	users := userService.FindAll()
-	ctx.JSON(200, users)
+	ctx.JSON(200, presenter.Response(true, users, ""))
 }
 
 // FindUserById godoc
@@ -41,11 +42,11 @@ func FindUserById(ctx *gin.Context) {
 	user := userService.FindById(userId)
 
 	if user.Id == 0 {
-		ctx.JSON(http.StatusNotFound, "User not found")
+		ctx.JSON(http.StatusNotFound, presenter.Response(false, "", "user not found"))
 		return
 	}
 
-	ctx.JSON(http.StatusOK, user)
+	ctx.JSON(http.StatusOK, presenter.Response(true, user, ""))
 }
 
 // CreateUser godoc
@@ -63,12 +64,12 @@ func CreateUser(ctx *gin.Context) {
 	var user dto.UserInput
 
 	if err := ctx.ShouldBindJSON(&user); err != nil {
-		ctx.JSON(http.StatusBadRequest, err.Error())
+		ctx.JSON(http.StatusBadRequest, presenter.Response(false, "", err.Error()))
 		return
 	}
 
 	userCreated := userService.Create(user)
-	ctx.JSON(http.StatusCreated, userCreated)
+	ctx.JSON(http.StatusCreated, presenter.Response(true, *userCreated, ""))
 }
 
 // UpdateUser godoc
@@ -88,20 +89,18 @@ func UpdateUser(ctx *gin.Context) {
 	var user dto.UserInput
 
 	if err := ctx.ShouldBindJSON(&user); err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{
-			"error": err.Error(),
-		})
+		ctx.JSON(http.StatusBadRequest, presenter.Response(false, "", err.Error()))
 		return
 	}
 
 	userUpdated := userService.Update(userId, user)
 
 	if userUpdated.Id == 0 {
-		ctx.JSON(http.StatusNotFound, "User not found to update")
+		ctx.JSON(http.StatusNotFound, presenter.Response(false, "", "user not found"))
 		return
 	}
 
-	ctx.JSON(http.StatusOK, userUpdated)
+	ctx.JSON(http.StatusOK, presenter.Response(true, userUpdated, ""))
 }
 
 // DeleteUser godoc
@@ -112,7 +111,7 @@ func UpdateUser(ctx *gin.Context) {
 // @Accept json
 // @Produce json
 // @Param id path int true "User Id"
-// @Success 200 {string} string
+// @Success 204 {string} string
 // @Failure 404 {string} httputil.HTTPError
 // @Router /users/{id} [delete]
 func DeleteUser(ctx *gin.Context) {
@@ -120,9 +119,9 @@ func DeleteUser(ctx *gin.Context) {
 	wasDeleted := userService.Delete(userId)
 
 	if !wasDeleted {
-		ctx.JSON(http.StatusNotFound, "User not found to delete")
+		ctx.JSON(http.StatusNotFound, presenter.Response(false, "", "user not found"))
 		return
 	}
 
-	ctx.JSON(http.StatusOK, "User deleted successfully")
+	ctx.JSON(http.StatusNoContent, nil)
 }
