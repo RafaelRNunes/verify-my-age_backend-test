@@ -17,7 +17,7 @@ func (this *EncrypterBcryptAdapter) Encrypt(value string) (string, error) {
 	crypto, err := bcrypt.GenerateFromPassword([]byte(value), bcrypt.DefaultCost)
 
 	if err != nil {
-		log.Println("Não foi possível cryptografar valor.", err)
+		log.Println(err.Error())
 		return "", err
 	}
 
