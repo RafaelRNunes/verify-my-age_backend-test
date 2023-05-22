@@ -47,7 +47,8 @@ func (this *UserMySqlRepository) Update(userId int, user entity.User) entity.Use
 	}
 
 	userModel.MapUserToModel(user)
-	database.DB.Model(&userModel).Updates(userModel)
+	database.DB.Model(&userModel).UpdateColumns(userModel)
+	database.DB.Model(&userModel.Address).UpdateColumns(userModel.Address)
 	database.DB.Preload("Address").First(&userModel, userId)
 
 	return *userModel.MapUserToEntity()
