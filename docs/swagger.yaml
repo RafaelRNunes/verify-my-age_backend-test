@@ -13,11 +13,6 @@ definitions:
         type: integer
       postcode:
         type: string
-    required:
-    - address
-    - city
-    - country
-    - postcode
     type: object
   dto.AddressOutput:
     properties:
@@ -48,12 +43,6 @@ definitions:
         type: string
       password:
         type: string
-    required:
-    - address
-    - age
-    - email
-    - name
-    - password
     type: object
   dto.UserOutput:
     properties:
@@ -143,7 +132,7 @@ paths:
     get:
       consumes:
       - application/json
-      description: Return a list of users and address
+      description: Return a user and address
       parameters:
       - description: User Id
         in: path
@@ -161,7 +150,7 @@ paths:
           description: Not Found
           schema:
             type: string
-      summary: Return a list of users
+      summary: Return a user
       tags:
       - User
     patch:
@@ -191,7 +180,7 @@ paths:
           description: Bad Request
           schema:
             type: string
-      summary: Update a users
+      summary: Update a user
       tags:
       - User
 swagger: "2.0"

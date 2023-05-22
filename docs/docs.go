@@ -82,7 +82,7 @@ const docTemplate = `{
         },
         "/users/{id}": {
             "get": {
-                "description": "Return a list of users and address",
+                "description": "Return a user and address",
                 "consumes": [
                     "application/json"
                 ],
@@ -92,7 +92,7 @@ const docTemplate = `{
                 "tags": [
                     "User"
                 ],
-                "summary": "Return a list of users",
+                "summary": "Return a user",
                 "parameters": [
                     {
                         "type": "integer",
@@ -164,7 +164,7 @@ const docTemplate = `{
                 "tags": [
                     "User"
                 ],
-                "summary": "Update a users",
+                "summary": "Update a user",
                 "parameters": [
                     {
                         "type": "integer",
@@ -203,12 +203,6 @@ const docTemplate = `{
     "definitions": {
         "dto.AddressInput": {
             "type": "object",
-            "required": [
-                "address",
-                "city",
-                "country",
-                "postcode"
-            ],
             "properties": {
                 "address": {
                     "type": "string"
@@ -255,13 +249,6 @@ const docTemplate = `{
         },
         "dto.UserInput": {
             "type": "object",
-            "required": [
-                "address",
-                "age",
-                "email",
-                "name",
-                "password"
-            ],
             "properties": {
                 "address": {
                     "$ref": "#/definitions/dto.AddressInput"

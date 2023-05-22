@@ -28,9 +28,9 @@ func FindUsers(ctx *gin.Context) {
 }
 
 // FindUserById godoc
-// @Summary Return a list of users
+// @Summary Return a user
 // @Schemes
-// @Description Return a list of users and address
+// @Description Return a user and address
 // @Tags User
 // @Accept json
 // @Produce json
@@ -79,7 +79,7 @@ func CreateUser(ctx *gin.Context) {
 }
 
 // UpdateUser godoc
-// @Summary Update a users
+// @Summary Update a user
 // @Schemes
 // @Description Update user and address
 // @Tags User
