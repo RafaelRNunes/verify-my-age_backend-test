@@ -40,7 +40,7 @@ func (this *UserMySqlRepository) FindById(userId int) entity.User {
 
 func (this *UserMySqlRepository) Update(userId int, user entity.User) entity.User {
 	var userModel models.User
-	database.DB.First(&userModel, userId)
+	database.DB.Preload("Address").First(&userModel, userId)
 
 	if userModel.ID == 0 {
 		return entity.User{}
@@ -48,7 +48,7 @@ func (this *UserMySqlRepository) Update(userId int, user entity.User) entity.Use
 
 	userModel.MapUserToModel(user)
 	database.DB.Model(&userModel).Updates(userModel)
-	database.DB.First(&userModel, userId)
+	database.DB.Preload("Address").First(&userModel, userId)
 
 	return *userModel.MapUserToEntity()
 }

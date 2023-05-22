@@ -1,0 +1,186 @@
+definitions:
+  dto.AddressInput:
+    properties:
+      address:
+        type: string
+      city:
+        type: string
+      country:
+        type: string
+      county:
+        type: string
+      id:
+        type: integer
+      postcode:
+        type: string
+    type: object
+  dto.AddressOutput:
+    properties:
+      address:
+        type: string
+      city:
+        type: string
+      country:
+        type: string
+      county:
+        type: string
+      id:
+        type: integer
+      postcode:
+        type: string
+    type: object
+  dto.UserInput:
+    properties:
+      address:
+        $ref: '#/definitions/dto.AddressInput'
+      age:
+        type: integer
+      email:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      password:
+        type: string
+    type: object
+  dto.UserOutput:
+    properties:
+      address:
+        $ref: '#/definitions/dto.AddressOutput'
+      age:
+        type: integer
+      email:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      password:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /users:
+    get:
+      consumes:
+      - application/json
+      description: Return a list of users and address
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/dto.UserOutput'
+            type: array
+      summary: Return a list of users
+      tags:
+      - User
+    post:
+      consumes:
+      - application/json
+      description: Create a user
+      parameters:
+      - description: User Body
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/dto.UserInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.UserOutput'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      summary: Create a user
+      tags:
+      - User
+  /users/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a user and address
+      parameters:
+      - description: User Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "404":
+          description: Not Found
+          schema:
+            type: string
+      summary: Delete a user
+      tags:
+      - User
+    get:
+      consumes:
+      - application/json
+      description: Return a list of users and address
+      parameters:
+      - description: User Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.UserOutput'
+        "404":
+          description: Not Found
+          schema:
+            type: string
+      summary: Return a list of users
+      tags:
+      - User
+    patch:
+      consumes:
+      - application/json
+      description: Update user and address
+      parameters:
+      - description: User Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: User Body
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/dto.UserInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.UserOutput'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      summary: Update a users
+      tags:
+      - User
+swagger: "2.0"

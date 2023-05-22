@@ -7,5 +7,7 @@ import (
 
 func main() {
 	database.Connection()
+
+	// Gin web framework
 	routes.HandleRequests().Run()
 }
