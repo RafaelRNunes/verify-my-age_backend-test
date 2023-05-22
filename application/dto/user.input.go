@@ -6,20 +6,20 @@ import (
 
 type UserInput struct {
 	Id           int          `json:"id"`
-	Name         string       `json:"name"`
-	Age          int          `json:"age"`
-	Email        string       `json:"email"`
-	Password     string       `json:"password"`
+	Name         string       `json:"name" validate:"nonzero"`
+	Age          int          `json:"age" validate:"nonzero"`
+	Email        string       `json:"email" validate:"nonzero"`
+	Password     string       `json:"password" validate:"nonzero"`
 	AddressInput AddressInput `json:"address"`
 }
 
 type AddressInput struct {
 	Id       int    `json:"id"`
-	Address  string `json:"address"`
-	City     string `json:"city"`
+	Address  string `json:"address" validate:"nonzero"`
+	City     string `json:"city" validate:"nonzero"`
 	County   string `json:"county"`
-	Country  string `json:"country"`
-	Postcode string `json:"postcode"`
+	Country  string `json:"country" validate:"nonzero"`
+	Postcode string `json:"postcode" validate:"nonzero"`
 }
 
 func (this *UserInput) MapUserToEntity() *entity.User {

@@ -13,6 +13,11 @@ definitions:
         type: integer
       postcode:
         type: string
+    required:
+    - address
+    - city
+    - country
+    - postcode
     type: object
   dto.AddressOutput:
     properties:
@@ -43,6 +48,12 @@ definitions:
         type: string
       password:
         type: string
+    required:
+    - address
+    - age
+    - email
+    - name
+    - password
     type: object
   dto.UserOutput:
     properties:

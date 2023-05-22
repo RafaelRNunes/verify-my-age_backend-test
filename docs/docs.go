@@ -203,6 +203,12 @@ const docTemplate = `{
     "definitions": {
         "dto.AddressInput": {
             "type": "object",
+            "required": [
+                "address",
+                "city",
+                "country",
+                "postcode"
+            ],
             "properties": {
                 "address": {
                     "type": "string"
@@ -249,6 +255,13 @@ const docTemplate = `{
         },
         "dto.UserInput": {
             "type": "object",
+            "required": [
+                "address",
+                "age",
+                "email",
+                "name",
+                "password"
+            ],
             "properties": {
                 "address": {
                     "$ref": "#/definitions/dto.AddressInput"

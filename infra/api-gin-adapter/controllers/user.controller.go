@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"github.com/RafaelRNunes/verify-my-age_backend-test/application/dto"
+	"github.com/RafaelRNunes/verify-my-age_backend-test/application/validation"
 	"github.com/RafaelRNunes/verify-my-age_backend-test/config"
 	"github.com/RafaelRNunes/verify-my-age_backend-test/infra/api-gin-adapter/presenter"
 	"github.com/gin-gonic/gin"
@@ -64,6 +65,11 @@ func CreateUser(ctx *gin.Context) {
 	var user dto.UserInput
 
 	if err := ctx.ShouldBindJSON(&user); err != nil {
+		ctx.JSON(http.StatusBadRequest, presenter.Response(false, "", err.Error()))
+		return
+	}
+
+	if err := validation.ValidateUser(&user); err != nil {
 		ctx.JSON(http.StatusBadRequest, presenter.Response(false, "", err.Error()))
 		return
 	}
